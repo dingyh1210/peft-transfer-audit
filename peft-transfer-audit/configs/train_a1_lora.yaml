@@ -1,0 +1,38 @@
+### 模型
+model_name_or_path: Qwen/Qwen2.5-1.5B-Instruct
+
+### 方法（8 组实验唯一变化的地方）
+stage: sft
+do_train: true
+finetuning_type: lora
+lora_target: all
+lora_rank: 8
+lora_alpha: 16
+lora_dropout: 0
+use_dora: false
+pissa_init: false
+
+### 数据
+dataset: alpaca_gpt4_en
+template: qwen
+cutoff_len: 2048
+max_samples: 10000
+overwrite_cache: true
+preprocessing_num_workers: 16
+
+### 训练
+per_device_train_batch_size: 4
+gradient_accumulation_steps: 4
+learning_rate: 1.0e-4
+num_train_epochs: 2
+lr_scheduler_type: cosine
+warmup_steps: 40
+bf16: true
+gradient_checkpointing: true
+seed: 42
+
+### 输出
+output_dir: saves/pilot/alpaca/lora
+logging_steps: 10
+save_steps: 100000
+plot_loss: true
